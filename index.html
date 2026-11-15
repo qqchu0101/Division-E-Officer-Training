@@ -105,6 +105,21 @@ pre.out{white-space:pre-wrap;background:#f7f9fb;border:1px solid var(--line);bor
 .contact{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
 .contact a,.contact span{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;color:var(--navy);text-decoration:none;font-weight:700;font-size:14px;background:#fff}
 .contact a:hover{border-color:var(--navy)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icb{width:52px;height:52px;border-radius:16px;padding:12px;margin:0 auto 8px}
+.ics{width:22px;height:22px}
+.sechead{display:flex;align-items:center;gap:16px;margin-bottom:4px}
+.sechead .ill{position:relative;width:76px;height:76px;flex:0 0 76px}
+.sechead .ill .blob{position:absolute;inset:0;border-radius:28px;transform:rotate(-8deg);opacity:.16}
+.sechead .ill .ic{position:absolute;inset:14px;width:auto;height:auto}
+.sechead .ill .spark{position:absolute;width:22px;height:22px;right:-6px;top:-6px;color:var(--gold)}
+.sechead .ill .spark svg{stroke-width:2.4}
+.sechead .ill .dot{position:absolute;width:10px;height:10px;border-radius:50%;left:-4px;bottom:6px}
+@media(max-width:600px){.sechead .ill{width:58px;height:58px;flex-basis:58px}.sechead .ill .ic{inset:11px}}
+.part .ill2{display:flex;gap:8px;margin-bottom:8px}
+.part .ill2 .ic{width:44px;height:44px;padding:9px;border-radius:12px;background:#fff}
+.hw li .ic{position:absolute;right:12px;top:12px;width:26px;height:26px;color:var(--gray)}
 .step{border-radius:14px;padding:16px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s;background:#fff}
 .step .k{font-size:12px;font-weight:700;letter-spacing:.05em}
 .step .t{font-size:19px;font-weight:900;margin:4px 0}
@@ -283,10 +298,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
     </div>
     <div class="card" style="background:#eaf6ec;border:0"><div class="small muted">✅ 建立「接得住」的系統</div><b>工作有沒有辦法被承接？</b>
       <div style="font-size:14px;margin-top:6px">先給他看 SOP，再帶著他一起做；平常就邀請他協助，並找一位小夥伴當 mentor，一步一步帶領，讓他在上任前就做過、問過、熟悉過。</div>
-      <ul style="margin:8px 0 0;padding-left:20px;font-size:14px">
-        <li><b>President</b>：開始讓他練習主持會議</li>
-        <li><b>VPE</b>：開始讓他練習找人、安排角色、製作 agenda</li>
-      </ul>
+      <ul style="margin:8px 0 0;padding-left:20px;font-size:14px" id="roleexlist"></ul>
       <div style="margin-top:10px;font-weight:700;color:var(--c3)">➡️ 不要讓下一位從零開始。</div>
     </div>
   </div>
@@ -296,6 +308,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
       <div><div class="big" id="rname"></div><div class="muted" id="rdesc"></div></div>
       <div class="progress"><div class="small muted" id="ptext"></div><div class="pbar"><i id="pfill"></i></div></div>
     </div>
+    <div id="roleex" style="background:#eaf6ec;border-radius:12px;padding:12px 16px;margin-bottom:16px"></div>
     <div class="grid g2" id="phases"></div>
     <div class="btnrow">
       <button class="btn ghost" id="resetRole">清除這個職位的勾選</button>
@@ -312,6 +325,10 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
   <div class="dx" id="dx"></div>
   <div class="card rx" id="rx"><div class="muted">選一個原因，看對應的解方與工具。</div></div>
   <div class="callout">💡 沒人接，有時不是人的問題，是<b>工作的問題</b>：簡化流程、拆分工作、降低 Officer 負擔。</div>
+
+  <h2 style="margin-top:34px">🧰 救援工具箱：六個實用做法</h2>
+  <p class="lead">上面診斷器裡的編號都來自這裡。標籤代表這個工具最適合哪一種原因，點標籤可以直接看那個診斷。</p>
+  <div class="grid g2" id="toolbox"></div>
 </section>
 
 <!-- cases -->
@@ -463,13 +480,13 @@ renderSteps();
 
 /* ---------- roles ---------- */
 const ROLES=[
- {id:'P',n:'President',zh:'培養決策者',d:'讓下一位參與目標設定、會議主持、重要決策'},
- {id:'VPE',n:'VPE',zh:'培養教育規劃者',d:'讓會員一起排程、安排角色、追蹤教育進度'},
- {id:'VPM',n:'VPM',zh:'培養會員經營者',d:'帶會員一起做 Guest follow-up、新會員 onboarding'},
- {id:'VPPR',n:'VPPR',zh:'培養品牌推廣者',d:'讓會員參與社群、活動宣傳、內容製作'},
- {id:'S',n:'Secretary',zh:'培養行政接手者',d:'讓下一位熟悉會議紀錄、文件與行政流程'},
- {id:'T',n:'Treasurer',zh:'培養財務管理者',d:'整理帳務節奏、付款流程、年度財務重點'},
- {id:'SAA',n:'SAA',zh:'培養會議營運者',d:'讓會員熟悉場地、設備、會前準備與流程'}];
+ {id:'P',n:'President',zh:'培養決策者',d:'讓下一位參與目標設定、會議主持、重要決策',s:'開始讓他練習主持會議',ex:['讓他輪流主持一次例會或幹部會議','訂分會目標、做重要決定時，邀他一起討論','你主持時請他在旁邊看，會後一起檢討']},
+ {id:'VPE',n:'VPE',zh:'培養教育規劃者',d:'讓會員一起排程、安排角色、追蹤教育進度',s:'開始讓他練習找人、安排角色、製作 agenda',ex:['讓他負責一次例會的找人與角色安排','帶他一起製作 agenda，再讓他獨立做一份','一起追蹤會員的 Pathways 進度']},
+ {id:'VPM',n:'VPM',zh:'培養會員經營者',d:'帶會員一起做 Guest follow-up、新會員 onboarding',s:'帶他一起做 Guest follow-up 和新會員 onboarding',ex:['例會後請他一起聯繫來賓、邀請下次再來','讓他陪新會員認識分會、介紹 Pathways','一起關心一陣子沒出席的會員']},
+ {id:'VPPR',n:'VPPR',zh:'培養品牌推廣者',d:'讓會員參與社群、活動宣傳、內容製作',s:'讓他一起操作社群、做活動宣傳',ex:['讓他負責一次例會的社群貼文或照片','一起做一次活動宣傳圖和文案','試寫一篇例會亮點分享']},
+ {id:'S',n:'Secretary',zh:'培養行政接手者',d:'讓下一位熟悉會議紀錄、文件與行政流程',s:'讓他練習寫會議紀錄、熟悉行政流程',ex:['讓他記錄一次幹部會議，你再幫他看過','帶他認識文件放在哪裡、怎麼分類','一起完成一次紀錄的整理和分發']},
+ {id:'T',n:'Treasurer',zh:'培養財務管理者',d:'整理帳務節奏、付款流程、年度財務重點',s:'帶他一起整理帳務、了解付款流程',ex:['請他一起整理一次當月帳務','說明一次付款和報帳的流程','跟他講清楚一年中哪些時間點要特別注意']},
+ {id:'SAA',n:'SAA',zh:'培養會議營運者',d:'讓會員熟悉場地、設備、會前準備與流程',s:'讓他熟悉場務和會議準備',ex:['請他提早到場，一起布置場地、測試設備','讓他負責一次例會的會前準備清單','例會中請他協助控場和流程']}];
 const PHASES=[
  {k:'Document',zh:'留下執行依據',c:'var(--c1)',x:['撰寫／整理 SOP','彙整關鍵文件','整理帳號與權限','更新行事曆與時程']},
  {k:'Share',zh:'分享與傳承',c:'var(--c2)',x:['將資料集中分享','說明工作流程與重點','邀請下一位一起參與','解答實際操作問題']},
@@ -480,6 +497,7 @@ function renderRoles(){
  $('#roles').innerHTML=ROLES.map(r=>`<button class="role ${r.id===role?'on':''}" data-id="${r.id}">${r.n}</button>`).join('');
  document.querySelectorAll('.role').forEach(b=>b.onclick=()=>{role=b.dataset.id;store.set('role',role);renderRoles()});
  const r=ROLES.find(x=>x.id===role);$('#rname').textContent=`${r.n}｜${r.zh}`;$('#rdesc').textContent=r.d;
+ $('#roleex').innerHTML=`<b style="color:var(--c3)">帶人示範：${r.n} 可以這樣做</b><ul style="margin:6px 0 0;padding-left:20px">${r.ex.map(x=>`<li>${x}</li>`).join('')}</ul>`;
  const c=checks[role]||{};
  $('#phases').innerHTML=PHASES.map((p,pi)=>`<div class="phase"><h4><span class="pill" style="background:${p.c}">${p.k}</span>${p.zh}</h4>${p.x.map((t,ti)=>{const key=pi+'-'+ti;return `<div class="chk ${c[key]?'done':''}" data-k="${key}"><div class="box">${c[key]?'✓':''}</div><span>${t}</span></div>`}).join('')}</div>`).join('');
  document.querySelectorAll('.chk').forEach(el=>el.onclick=()=>{const cc=checks[role]||(checks[role]={});cc[el.dataset.k]=!cc[el.dataset.k];store.set('checks',checks);renderRoles()});
@@ -488,8 +506,9 @@ function renderRoles(){
  $('#ptext').textContent=`交接準備度 ${done}/${total}`+(done===total?'　🎉 可以安心交棒了！':done>=8?'　已經過半，繼續加油':'');
 }
 renderRoles();
+$('#roleexlist').innerHTML=ROLES.map(r=>`<li><b>${r.n}</b>：${r.s}</li>`).join('');
 $('#resetRole').onclick=()=>{checks[role]={};store.set('checks',checks);renderRoles();toast('已清除')};
-$('#copyRole').onclick=()=>{const r=ROLES.find(x=>x.id===role),c=checks[role]||{};let out=`【${r.n} 交接待辦】${r.zh}：${r.d}\n`;PHASES.forEach((p,pi)=>{out+=`\n${p.k}｜${p.zh}\n`;p.x.forEach((t,ti)=>out+=`${c[pi+'-'+ti]?'☑':'☐'} ${t}\n`)});copy(out)};
+$('#copyRole').onclick=()=>{const r=ROLES.find(x=>x.id===role),c=checks[role]||{};let out=`【${r.n} 交接待辦】${r.zh}：${r.d}\n\n帶人示範\n${r.ex.map(x=>'・'+x).join('\n')}\n`;PHASES.forEach((p,pi)=>{out+=`\n${p.k}｜${p.zh}\n`;p.x.forEach((t,ti)=>out+=`${c[pi+'-'+ti]?'☑':'☐'} ${t}\n`)});copy(out)};
 
 /* ---------- rescue ---------- */
 const TOOLS={
@@ -521,6 +540,10 @@ function renderDx(){
  h+=`<div class="callout" style="margin-top:16px">下一步：用 <a href="#coach" style="color:var(--navy2);font-weight:700">教練式提問</a> 陪他談，而不是一直勸。</div>`;
  $('#rx').innerHTML=h}
 renderDx();
+$('#toolbox').innerHTML=Object.keys(TOOLS).map(n=>{
+ const tags=DX.map((d,i)=>d.tools.includes(+n)?`<button class="opt" data-dx="${i}" style="margin:6px 6px 0 0">${d.t}</button>`:'').join('');
+ return `<div class="tool" style="background:#fff;border:1px solid var(--line);margin:0"><div class="no">${n}</div><div><b>${TOOLS[n][0]}</b>${TOOLS[n][1]}<div>${tags}</div></div></div>`}).join('');
+document.querySelectorAll('[data-dx]').forEach(b=>b.onclick=()=>{dxOn=+b.dataset.dx;renderDx();$('#dx').scrollIntoView({behavior:'smooth',block:'center'})});
 
 /* ---------- path ---------- */
 const PATH=[

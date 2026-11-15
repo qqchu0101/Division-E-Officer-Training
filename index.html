@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>讓領導延續：接班工具包</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#004165; --navy2:#0b5a85; --maroon:#772432; --gold:#F2DF74; --gray:#A9B2B1;
+  --bg:#f5f7fa; --card:#fff; --ink:#1d2b36; --muted:#5d6b76; --line:#e2e8ee;
+  --c1:#3b82c4; --c2:#e8823a; --c3:#4f9d5c; --c4:#7d63b8;
+  --r:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:"Noto Sans TC",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+header.hero{background:linear-gradient(135deg,var(--navy) 0%,#00304d 100%);color:#fff;padding:44px 20px 70px;text-align:center;position:relative;overflow:hidden}
+header.hero::after{content:"";position:absolute;inset:auto -10% -60px -10%;height:120px;background:var(--bg);border-radius:50% 50% 0 0}
+.eyebrow{letter-spacing:.25em;font-size:12px;opacity:.75;font-weight:700}
+h1{font-size:clamp(26px,5vw,42px);margin:10px 0 6px;font-weight:900;color:var(--gold)}
+.sub{opacity:.85;font-size:15px}
+nav.tabs{position:sticky;top:0;z-index:20;background:rgba(245,247,250,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tabs-inner{max-width:1080px;margin:0 auto;display:flex;gap:6px;overflow-x:auto;padding:10px 14px;scrollbar-width:none}
+.tabs-inner::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;border:1px solid var(--line);background:#fff;color:var(--muted);padding:8px 14px;border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap;transition:.15s}
+.tab:hover{border-color:var(--navy2);color:var(--navy)}
+.tab.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.tab .n{display:inline-block;font-size:11px;opacity:.7;margin-right:4px}
+main{max-width:1080px;margin:0 auto;padding:26px 16px 80px}
+section.view{display:none;animation:fade .3s ease}
+section.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{font-size:clamp(22px,3.4vw,30px);margin:0 0 4px;font-weight:900;color:var(--navy)}
+.lead{color:var(--muted);margin:0 0 22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;color:#fff}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+/* overview */
+.ab{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:stretch}
+.ab .arrow{display:flex;align-items:center;font-size:30px;color:var(--navy2);font-weight:900}
+@media(max-width:700px){.ab{grid-template-columns:1fr}.ab .arrow{justify-content:center;transform:rotate(90deg)}}
+.part{border-radius:var(--r);padding:22px;cursor:pointer;transition:.2s;border:2px solid transparent}
+.part:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,65,101,.12)}
+.part.a{background:#eaf3fb;border-color:#cfe3f4}
+.part.b{background:#fdf0ea;border-color:#f6d9c9}
+.part h3{margin:0 0 10px;font-size:22px}
+.part ul{margin:0;padding:0;list-style:none}
+.part li{padding:5px 0;font-weight:500}
+.part li::before{content:"✓";display:inline-block;width:22px;height:22px;line-height:22px;text-align:center;border-radius:6px;background:#fff;margin-right:8px;font-size:13px;font-weight:900}
+.part.a li::before{color:var(--c1)} .part.b li::before{color:var(--c2)}
+.part .quote{margin-top:14px;background:#fff;border-radius:12px;padding:10px 14px;font-weight:700;font-size:14px}
+.go{margin-top:10px;font-size:13px;color:var(--navy2);font-weight:700}
+
+/* pain vote */
+.pain{text-align:center;cursor:pointer;transition:.2s;border:2px solid var(--line);position:relative}
+.pain:hover{border-color:var(--gray)}
+.pain.sel{border-color:var(--maroon);background:#fbf3f4}
+.pain .num{font-weight:900;font-size:13px;color:#fff;border-radius:999px;padding:2px 12px;display:inline-block}
+.pain h3{margin:10px 0 4px;font-size:21px}
+.pain .tick{position:absolute;top:10px;right:12px;color:var(--maroon);font-weight:900;opacity:0}
+.pain.sel .tick{opacity:1}
+.callout{margin-top:18px;border-left:4px solid var(--maroon);background:#fff;padding:14px 18px;border-radius:0 12px 12px 0}
+
+/* timeline */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.compare{grid-template-columns:1fr}}
+.rule{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.rule:last-child{border:0}
+.rule b{color:var(--navy)}
+.tl{position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:3px;background:linear-gradient(var(--c1),var(--c2),var(--c3),var(--c4));border-radius:3px}
+.tl-item{position:relative;padding:8px 0 14px}
+.tl-item::before{content:"";position:absolute;left:-23px;top:13px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--dot)}
+.tl-item .when{font-size:12px;font-weight:700;color:var(--dot)}
+.tl-item .what{font-weight:700}
+.monthbar{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:18px}
+.mb{font-size:11px;text-align:center;color:var(--muted)}
+.mb .bar{height:8px;border-radius:4px;background:var(--line);margin-bottom:4px}
+
+/* 4 steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:760px){.steps{grid-template-columns:1fr 1fr}}
+.case{border:2px solid var(--line);background:#fff;border-radius:14px;padding:16px;text-align:left;transition:.15s}
+.case.on{border-color:var(--navy);box-shadow:0 6px 18px rgba(0,65,101,.12)}
+.case .big{font-size:22px;font-weight:900;color:var(--navy)}
+.hw{counter-reset:hw;list-style:none;padding:0;margin:0}
+.hw li{counter-increment:hw;position:relative;padding:12px 12px 12px 54px;border-bottom:1px dashed var(--line)}
+.hw li:last-child{border:0}
+.hw li::before{content:counter(hw);position:absolute;left:10px;top:12px;width:32px;height:32px;border-radius:50%;background:var(--maroon);color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center}
+.hw li b{color:var(--navy)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:640px){.form{grid-template-columns:1fr}}
+.form label{font-size:13px;color:var(--muted);display:block}
+.form input,.form select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;font:inherit;margin-top:3px;background:#fff}
+.form .full{grid-column:1/-1}
+pre.out{white-space:pre-wrap;background:#f7f9fb;border:1px solid var(--line);border-radius:12px;padding:14px;font-family:inherit;font-size:14px;margin:8px 0 0}
+.contact{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.contact a,.contact span{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;color:var(--navy);text-decoration:none;font-weight:700;font-size:14px;background:#fff}
+.contact a:hover{border-color:var(--navy)}
+.step{border-radius:14px;padding:16px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.2s;background:#fff}
+.step .k{font-size:12px;font-weight:700;letter-spacing:.05em}
+.step .t{font-size:19px;font-weight:900;margin:4px 0}
+.step.on{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.stepdetail{margin-top:12px;min-height:60px}
+
+/* role checklist */
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.role{border:2px solid var(--line);background:#fff;border-radius:12px;padding:8px 14px;font-weight:700;color:var(--navy);transition:.15s}
+.role.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.rolehead{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.rolehead .big{font-size:24px;font-weight:900;color:var(--navy)}
+.progress{flex:1;min-width:200px}
+.pbar{height:12px;background:var(--line);border-radius:999px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c1),var(--c3));transition:width .35s}
+.phase h4{margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;cursor:pointer;user-select:none;transition:.12s}
+.chk:hover{background:#f3f6f9}
+.chk .box{flex:0 0 22px;height:22px;border:2px solid var(--gray);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;margin-top:2px;transition:.12s}
+.chk.done .box{background:var(--c3);border-color:var(--c3)}
+.chk.done span{color:var(--muted);text-decoration:line-through}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn{border:0;border-radius:10px;padding:9px 16px;font-weight:700;background:var(--navy);color:#fff}
+.btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.selfq{background:#fff8dc;border:1px solid #f0e2a1;border-radius:12px;padding:12px 16px;margin-bottom:16px;font-weight:700}
+
+/* diagnose */
+.dx{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:760px){.dx{grid-template-columns:1fr 1fr}}
+.dxb{border:2px solid var(--line);background:#fff;border-radius:14px;padding:18px 10px;font-size:20px;font-weight:900;color:var(--ink);transition:.15s}
+.dxb small{display:block;font-size:12px;font-weight:500;color:var(--muted);margin-top:2px}
+.dxb.on{border-color:var(--maroon);background:var(--maroon);color:#fff}
+.dxb.on small{color:#f3d6db}
+.rx{margin-top:18px}
+.rx .dir{font-size:22px;font-weight:900;color:var(--maroon);margin:0 0 6px}
+.tool{display:flex;gap:12px;padding:14px;border-radius:12px;background:#f7f9fb;margin-top:10px}
+.tool .no{flex:0 0 32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900}
+.tool b{display:block;color:var(--navy)}
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media(max-width:600px){.pairs{grid-template-columns:1fr}}
+.pr{padding:10px 12px;border-radius:10px;font-size:14px}
+.pr.bad{background:#fdecee}
+.pr.good{background:#eaf6ec}
+.acting{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-top:12px}
+.act{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:13px}
+.act b{display:block;color:var(--maroon);font-size:14px}
+
+/* growth path */
+.path{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;position:relative}
+@media(max-width:760px){.path{grid-template-columns:1fr 1fr}}
+.pstep{border-radius:14px;padding:16px;background:#fff;border:2px solid var(--line);cursor:pointer;transition:.2s;text-align:center}
+.pstep .lv{font-size:12px;font-weight:700;color:#fff;padding:2px 10px;border-radius:999px;display:inline-block}
+.pstep h3{margin:8px 0 4px}
+.pstep.on{border-color:currentColor}
+.slider{margin:22px 0 6px;width:100%;accent-color:var(--navy)}
+.pathmsg{font-weight:700;text-align:center;font-size:18px;color:var(--navy);margin-top:14px}
+
+/* flip cards */
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.flip{perspective:900px;height:190px;cursor:pointer}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r);padding:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.front{background:var(--navy);color:#fff}
+.front .q{font-size:21px;font-weight:900;color:var(--gold)}
+.front .hint{font-size:12px;opacity:.7;margin-top:10px}
+.back{background:#fff;border:2px solid var(--navy);transform:rotateY(180deg);font-size:15px}
+.contrast{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-bottom:20px}
+.contrast .x{background:#fdecee;border-radius:12px;padding:14px;text-align:center;font-weight:700}
+.contrast .o{background:#eaf3fb;border-radius:12px;padding:14px;text-align:center;font-weight:700}
+@media(max-width:600px){.contrast{grid-template-columns:1fr}}
+
+/* commit */
+textarea{width:100%;min-height:90px;border:1.5px solid var(--line);border-radius:12px;padding:12px;font:inherit;resize:vertical}
+textarea:focus{outline:none;border-color:var(--navy2)}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.opt{border:1.5px dashed var(--gray);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px}
+.opt:hover{border-style:solid;border-color:var(--navy)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;transition:.3s;z-index:50;opacity:0;pointer-events:none}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+.navfoot{display:flex;justify-content:space-between;margin-top:26px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">TOASTMASTERS INTERNATIONAL · 幹部訓練</div>
+  <h1>讓領導延續：培養你的接班人</h1>
+  <div class="sub">互動工具包｜劉懿竺 Roseline Liu　薪傳國際英語演講會 IPP／輔導會長</div>
+</header>
+
+<nav class="tabs"><div class="tabs-inner" id="tabs"></div></nav>
+
+<main>
+
+<!-- 0 overview -->
+<section class="view" id="v-start">
+  <h2>今天的地圖</h2>
+  <p class="lead">接班有兩條路：還沒卡住時「預防」，已經卡住時「救援」。點一下想先看的那一邊。</p>
+  <div class="ab">
+    <div class="part a" data-go="plan">
+      <span class="pill" style="background:var(--c1)">Part A</span>
+      <h3>預防</h3>
+      <ul><li>提早觀察</li><li>提早邀請</li><li>提早試做</li><li>提早交接</li></ul>
+      <div class="quote">🌱 讓接班變成一整年的培養，而不是五月的臨時徵人。</div>
+      <div class="go">看預防做法 →</div>
+    </div>
+    <div class="arrow">»</div>
+    <div class="part b" data-go="rescue">
+      <span class="pill" style="background:var(--c2)">Part B</span>
+      <h3>救援</h3>
+      <ul><li>先診斷原因</li><li>降低進入門檻</li><li>簡化工作負擔</li><li>用 Coach 陪他走下一步</li></ul>
+      <div class="quote">🧭 當接班已經卡住，不是一直勸，而是先找出阻力。</div>
+      <div class="go">看救援做法 →</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px;text-align:center">
+    <div class="muted small">核心問題</div>
+    <div style="font-size:20px;font-weight:900;color:var(--navy)">如何讓會員從「願意參與」，走向「願意承擔」？</div>
+    <div class="small muted">願意參與：出席・擔任例會角色・投入活動　→　願意承擔：接任幹部・帶領專案・推動分會目標</div>
+  </div>
+</section>
+
+<!-- 1 why -->
+<section class="view" id="v-why">
+  <h2>為什麼接班總是這麼難？</h2>
+  <p class="lead">從課前問卷看見分會常見的接班困境。你的分會最像哪一個？（可複選）</p>
+  <div class="grid g4" id="pains"></div>
+  <div class="callout" id="painmsg">點選後，這裡會告訴你先看哪一段。</div>
+</section>
+
+<!-- 2 plan -->
+<section class="view" id="v-plan">
+  <span class="pill" style="background:var(--c1)">Part A｜預防</span>
+  <h2 style="margin-top:8px">接班的時間軸：官方規定 vs. 最佳實務</h2>
+  <p class="lead">官方規定告訴你「最晚什麼時候要做完」，最佳實務告訴你「什麼時候就該開始」。</p>
+  <div class="compare">
+    <div class="card">
+      <h3 style="margin:0 0 6px;color:var(--navy)">📋 官方規定 <span class="small muted">Official Rule</span></h3>
+      <div class="rule"><b>選舉時間</b><div>年度任期：原則上 5 月第一次例會選舉<br>半年任期：5 月、11 月第一次例會選舉<br><span class="small muted">任期：7/1–6/30（半年任期 7/1–12/31、1/1–6/30）；例會頻率低於每週一次的分會只能採年度任期</span></div></div>
+      <div class="rule"><b>Club Leadership Committee</b><div>由 President 在選舉<b>至少 2 週前</b>指派成立；原則上（可行時）由 3 位 Active Members 組成；由 Immediate Past President 擔任 Chair，除非分會最佳利益另有需要<br><span class="small muted">Committee 的提名報告須在選舉前一次例會的事務會議提出</span></div></div>
+      <div class="rule"><b>現場提名</b><div>Committee 提出人選後，選舉當天仍可由 Active Member 提出 floor nominations；沒有成立 Committee 也能直接用現場提名進行選舉</div></div>
+      <div class="rule"><b>提交資料</b><div>新任幹部資料須送交 Toastmasters International：年度任期期限 6 月 30 日（半年任期另有 12 月 31 日）<br><span class="small muted">在 Club Central 用「Future Term」登錄，現任幹部才不會在 6/30 前被替換；6/30 前送出可取得 DCP 的計分</span></div></div>
+      <div class="small muted" style="margin-top:10px">資料來源：<a href="https://www.toastmasters.org/Leadership-Central/Club-Officer-Tools/Club-Management/Club-Officer-Elections" style="color:var(--navy2)">TI Club Officer Elections</a>・<a href="https://www.toastmasters.org/footer/faq/Club-Officer-Elections" style="color:var(--navy2)">Club Officer Elections FAQ</a>・<a href="https://ccdn.toastmasters.org/medias/files/department-documents/whq-documents/ato-6a-club-constitution-form.pdf" style="color:var(--navy2)">Club Constitution</a></div>
+    </div>
+    <div class="card">
+      <h3 style="margin:0 0 4px;color:var(--maroon)">🎯 最佳實務 <span class="small muted">Best Practice</span></h3>
+      <div class="small muted" style="margin-bottom:8px">不要等到規定的「兩週前」才開始。點月份看這個月該做什麼。</div>
+      <div class="monthbar" id="monthbar"></div>
+      <div class="card" id="monthdetail" style="margin-top:12px;background:#f7f9fb;border:0"></div>
+    </div>
+  </div>
+  <div class="callout" style="border-color:var(--navy)"><b>核心問題：</b>不要到了 4、5 月才問：「誰願意當下一屆幹部？」</div>
+
+  <h2 style="margin-top:34px">讓接班從「臨時找人」變成「提早培養」</h2>
+  <p class="lead">點每一步看重點。</p>
+  <div class="steps" id="steps"></div>
+  <div class="card stepdetail" id="stepdetail"></div>
+</section>
+
+<!-- 3 role checklist -->
+<section class="view" id="v-role">
+  <span class="pill" style="background:var(--c1)">Part A｜預防</span>
+  <h2 style="margin-top:8px">接班是每一位 officer 的責任：我的交接清單</h2>
+  <p class="lead">選你的職位，用 Document → Share → Try → Handover 檢查自己準備到哪了。勾選紀錄只存在你這台裝置。</p>
+  <div class="selfq">☑ 我的工作，明年誰可以接？　☑ 如果明天換人，他知道怎麼做嗎？</div>
+  <div class="grid g2" style="margin-bottom:16px">
+    <div class="card" style="background:#fdecee;border:0"><div class="small muted">❌ 只找名字</div><b>「James，你明年當 VPE 好不好？」</b>
+      <ul style="margin:10px 0 0;padding-left:20px;font-size:14px">
+        <li>選舉前才臨時問，對方還不知道這個職位要做什麼</li>
+        <li>答應之後，只交給他帳號和一堆檔案</li>
+        <li>7 月一上任，從零開始摸索，遇到問題不知道找誰</li>
+      </ul>
+      <div style="margin-top:10px;font-weight:700;color:var(--maroon)">→ 找到了名字，但工作接不住。</div>
+    </div>
+    <div class="card" style="background:#eaf6ec;border:0"><div class="small muted">✅ 建立「接得住」的系統</div><b>工作有沒有辦法被承接？</b>
+      <div style="font-size:14px;margin-top:6px">先給他看 SOP，再帶著他一起做；平常就邀請他協助，並找一位小夥伴當 mentor，一步一步帶領，讓他在上任前就做過、問過、熟悉過。</div>
+      <ul style="margin:8px 0 0;padding-left:20px;font-size:14px">
+        <li><b>President</b>：開始讓他練習主持會議</li>
+        <li><b>VPE</b>：開始讓他練習找人、安排角色、製作 agenda</li>
+      </ul>
+      <div style="margin-top:10px;font-weight:700;color:var(--c3)">➡️ 不要讓下一位從零開始。</div>
+    </div>
+  </div>
+  <div class="roles" id="roles"></div>
+  <div class="card">
+    <div class="rolehead">
+      <div><div class="big" id="rname"></div><div class="muted" id="rdesc"></div></div>
+      <div class="progress"><div class="small muted" id="ptext"></div><div class="pbar"><i id="pfill"></i></div></div>
+    </div>
+    <div class="grid g2" id="phases"></div>
+    <div class="btnrow">
+      <button class="btn ghost" id="resetRole">清除這個職位的勾選</button>
+      <button class="btn" id="copyRole">複製我的待辦清單</button>
+    </div>
+  </div>
+</section>
+
+<!-- 4 rescue -->
+<section class="view" id="v-rescue">
+  <span class="pill" style="background:var(--c2)">Part B｜救援</span>
+  <h2 style="margin-top:8px">接班診斷器</h2>
+  <p class="lead">同樣是沒人接，原因可能完全不同。先找出真正原因，再對症下藥——你遇到的是哪一種？</p>
+  <div class="dx" id="dx"></div>
+  <div class="card rx" id="rx"><div class="muted">選一個原因，看對應的解方與工具。</div></div>
+  <div class="callout">💡 沒人接，有時不是人的問題，是<b>工作的問題</b>：簡化流程、拆分工作、降低 Officer 負擔。</div>
+</section>
+
+<!-- cases -->
+<section class="view" id="v-cases">
+  <span class="pill" style="background:var(--c2)">Part B｜救援</span>
+  <h2 style="margin-top:8px">大分會、小分會，救援方式不同</h2>
+  <p class="lead">選一個案例，先自己（或和小組）討論，再打開「討論提示」對照。提示是根據今天的工具整理的參考方向，不是標準答案。</p>
+  <div class="grid g2" id="cases"></div>
+  <div class="card" id="casebox" style="margin-top:14px"><div class="muted">選一個案例開始。</div></div>
+</section>
+
+<!-- 5 path -->
+<section class="view" id="v-path">
+  <span class="pill" style="background:var(--c2)">Part B｜救援</span>
+  <h2 style="margin-top:8px">信心，是一步一步做出來的</h2>
+  <p class="lead">給會員一條「小步前進」的路，從參與到承擔，自然而然走向幹部。拖拉看看你的潛在人選現在在哪一步。</p>
+  <div class="path" id="path"></div>
+  <input type="range" min="0" max="3" value="0" class="slider" id="pslider" aria-label="成長階段">
+  <div class="card pathmsg" id="pathmsg"></div>
+</section>
+
+<!-- 6 coach -->
+<section class="view" id="v-coach">
+  <span class="pill" style="background:var(--c2)">Part B｜救援</span>
+  <h2 style="margin-top:8px">從答案導向，改成用問題陪他思考</h2>
+  <p class="lead">用教練式對話支持他思考、探索與成長。點卡片翻面。</p>
+  <div class="contrast">
+    <div class="x">「你願不願意當？」</div>
+    <div style="text-align:center;font-weight:900;color:var(--navy)">→</div>
+    <div class="o">用以下問題陪伴他思考</div>
+  </div>
+  <div class="flips" id="flips"></div>
+</section>
+
+<!-- 8 homework -->
+<section class="view" id="v-commit">
+  <span class="pill" style="background:var(--maroon)">課後實作</span>
+  <h2 style="margin-top:8px">課後任務：我的接班第一步</h2>
+  <p class="lead">把今天學到的，變成回分會後真的做一次的行動。完成後在分享會上分享心得。</p>
+
+  <div class="card">
+    <h3 style="margin:0 0 6px;color:var(--navy)">任務四步驟</h3>
+    <ol class="hw">
+      <li><b>選一個行動</b>：從「我的交接清單」挑 1 項，這個月內完成。<div class="small muted">例：邀請一位會員旁觀或試做一次你的工作／寫一頁 SOP／用教練式提問和一位潛在人選聊聊</div></li>
+      <li><b>找一位夥伴，互相約定</b>：和一位學員約好回報日，到那天互相確認進度。</li>
+      <li><b>回分會分享</b>：在下一次幹部會議（Officer Meeting），分享今天學到的 1 個重點和你的行動。</li>
+      <li><b>回報區長或部長</b>：完成後，用下方模板回報，並在分享會上分享心得。</li>
+    </ol>
+    <div class="small muted" style="margin-top:8px">完成標準：☐ 行動已執行　☐ 已和夥伴確認　☐ 已在幹部會議分享　☐ 已回報區長／部長</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin:0 0 4px;color:var(--navy)">填一填，自動產生訊息</h3>
+    <div class="small muted" style="margin-bottom:12px">內容只存在你自己的裝置，不會上傳。提到其他會員時寫「一位會員」即可，不必寫全名。</div>
+    <div class="form">
+      <label>我的分會<input id="f-club" placeholder="例：薪傳國際英語演講會"></label>
+      <label>我的職位<select id="f-role"></select></label>
+      <label class="full">我要完成的接班行動
+        <input id="f-act" list="actlist" placeholder="選一個或自己寫">
+        <datalist id="actlist"></datalist></label>
+      <label>完成期限<input id="f-due" type="date"></label>
+      <label>約定夥伴（稱呼）<input id="f-buddy" placeholder="例：Amy"></label>
+      <label>和夥伴互相確認的日期<input id="f-check" type="date"></label>
+      <label>幹部會議分享日期<input id="f-om" type="date"></label>
+      <label>回報對象<select id="f-to"><option>區長</option><option>部長</option><option>區長與部長</option></select></label>
+    </div>
+    <div class="grid g2" style="margin-top:16px">
+      <div><b>① 給夥伴的約定訊息</b><pre class="out" id="o-buddy"></pre><button class="btn" style="margin-top:8px" data-copy="o-buddy">複製</button></div>
+      <div><b>② 給區長／部長的回報模板</b><span class="small muted">（完成後補上結果）</span><pre class="out" id="o-report"></pre><button class="btn" style="margin-top:8px" data-copy="o-report">複製</button></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;text-align:center">
+    <div style="font-size:22px;font-weight:900;color:var(--navy)">Q&amp;A・聯絡 Roseline</div>
+    <div class="muted">課後有任何問題，歡迎透過以下方式聯絡。</div>
+    <div class="contact">
+      <a href="https://www.linkedin.com/in/roselineliu/">in　LinkedIn</a>
+      <a href="https://www.facebook.com/qqchu0516">f　Facebook</a>
+      <span>✉　qqchu0101@gmail.com <button class="opt" id="copyMail" style="padding:2px 8px">複製</button></span>
+    </div>
+  </div>
+</section>
+
+<div class="navfoot">
+  <button class="btn ghost" id="prev">← 上一段</button>
+  <button class="btn" id="next">下一段 →</button>
+</div>
+</main>
+
+<footer>Toastmasters International · 讓領導延續：培養你的接班人 · 幹部訓練互動講義</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1800)}
+async function copy(text){try{await navigator.clipboard.writeText(text);toast('已複製 ✓')}catch(e){toast('無法自動複製，請手動選取')}}
+
+/* ---------- tabs / routing ---------- */
+const VIEWS=[['start','今天的地圖'],['why','為什麼難'],['plan','預防：時間軸'],['role','我的交接清單'],['rescue','救援：診斷器'],['cases','案例討論'],['path','成長路徑'],['coach','教練式提問'],['commit','課後任務']];
+const tabs=$('#tabs');
+VIEWS.forEach(([id,label],i)=>{const b=document.createElement('button');b.className='tab';b.dataset.id=id;b.innerHTML=`<span class="n">${String(i).padStart(2,'0')}</span>${label}`;b.onclick=()=>go(id);tabs.appendChild(b)});
+function go(id){if(!VIEWS.find(v=>v[0]===id))id='start';document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+id));document.querySelectorAll('.tab').forEach(t=>{t.classList.toggle('on',t.dataset.id===id);if(t.dataset.id===id)t.scrollIntoView({inline:'center',block:'nearest'})});if(location.hash!=='#'+id)history.replaceState(null,'','#'+id);window.scrollTo({top:Math.min(window.scrollY,document.querySelector('nav.tabs').offsetTop),behavior:'smooth'});const i=VIEWS.findIndex(v=>v[0]===id);$('#prev').style.visibility=i?'visible':'hidden';$('#next').style.visibility=i<VIEWS.length-1?'visible':'hidden';cur=i}
+let cur=0;
+$('#prev').onclick=()=>go(VIEWS[Math.max(0,cur-1)][0]);
+$('#next').onclick=()=>go(VIEWS[Math.min(VIEWS.length-1,cur+1)][0]);
+document.querySelectorAll('[data-go]').forEach(el=>el.onclick=()=>go(el.dataset.go));
+window.addEventListener('hashchange',()=>go(location.hash.slice(1)));
+document.addEventListener('keydown',e=>{if(e.target.tagName==='TEXTAREA')return;if(e.key==='ArrowRight')$('#next').click();if(e.key==='ArrowLeft')$('#prev').click()});
+
+/* ---------- why ---------- */
+const PAINS=[
+ {n:'01',t:'接班斷層',d:'下一代幹部找不到',c:'var(--c1)',to:'plan',tip:'從 11 月就開始觀察與盤點人才 → 看「預防：時間軸」'},
+ {n:'02',t:'工作太重',d:'分工不均，影響接班意願',c:'var(--c2)',to:'rescue',tip:'簡化、拆分工作 → 看「救援：診斷器」的「工作太重」'},
+ {n:'03',t:'沒有成長路徑',d:'做完例會角色後，沒有走向領導',c:'var(--c3)',to:'path',tip:'給會員一條小步前進的路 → 看「成長路徑」'},
+ {n:'04',t:'少數人撐全場',d:'目標與 DCP 都靠少數幹部推動',c:'var(--c4)',to:'role',tip:'接班是每一位 officer 的責任 → 看「我的交接清單」'}];
+const painSel=new Set(store.get('pains',[]));
+function renderPains(){$('#pains').innerHTML=PAINS.map((p,i)=>`<div class="card pain ${painSel.has(i)?'sel':''}" data-i="${i}"><span class="tick">✓</span><span class="num" style="background:${p.c}">${p.n}</span><h3>${p.t}</h3><div class="muted small">${p.d}</div></div>`).join('');
+ document.querySelectorAll('.pain').forEach(el=>el.onclick=()=>{const i=+el.dataset.i;painSel.has(i)?painSel.delete(i):painSel.add(i);store.set('pains',[...painSel]);renderPains()});
+ const list=[...painSel].sort();$('#painmsg').innerHTML=list.length?list.map(i=>`<div style="margin:4px 0"><b>${PAINS[i].t}</b>：${PAINS[i].tip} <a href="#${PAINS[i].to}" style="color:var(--navy2);font-weight:700">前往</a></div>`).join(''):'點選後，這裡會告訴你先看哪一段。'}
+renderPains();
+
+/* ---------- plan ---------- */
+const MONTHS=[
+ {m:'11',c:'var(--c1)',s:'Observe',t:'開始思考、觀察',x:['想一想：我的工作，明年誰可以接？','名單從 11 月就開始累積']},
+ {m:'12',c:'var(--c2)',s:'Invite / Try',t:'讓人先試',x:['邀請會員接例會小角色、小專案','讓潛在人選在幹部旁協作或擔任 Acting']},
+ {m:'1',c:'var(--c2)',s:'Try・盤點',t:'讓人先試＋開始盤點',x:['持續讓人試做','1–2 月：開始盤點潛在人選']},
+ {m:'2',c:'var(--c3)',s:'Coach',t:'盤點＋開始談意願',x:['完成人選盤點','用教練式提問了解他的顧慮與想學的東西']},
+ {m:'3',c:'var(--c3)',s:'Coach・討論',t:'談意願＋幹部會議討論',x:['3 月 Officer Meeting：討論接班人選與規劃','3 月底：準備成立 Club Leadership Committee']},
+ {m:'4',c:'var(--maroon)',s:'正式準備',t:'正式準備選舉',x:['3 月底～4 月初：President 指派 Club Leadership Committee（官方：至少選舉前 2 週）','Committee 聯繫人選、確認意願，並在選舉前一次例會提出報告']},
+ {m:'5',c:'var(--c4)',s:'Election',t:'完成選舉',x:['5 月第一次例會選舉','選後在 Club Central 用 Future Term 登錄新任幹部']},
+ {m:'6',c:'var(--c4)',s:'Handover',t:'交接',x:['5–6 月：Document → Share → Try → Handover','6/30 前完成新任幹部資料提交']}];
+let mOn=0;
+function renderMonths(){$('#monthbar').innerHTML=MONTHS.map((o,i)=>`<div class="mb" data-i="${i}" style="cursor:pointer;${i===mOn?'color:var(--ink);font-weight:700':''}"><div class="bar" style="background:${o.c};${i===mOn?'height:14px':''}"></div>${o.m}月</div>`).join('');
+ document.querySelectorAll('.mb').forEach(el=>el.onclick=()=>{mOn=+el.dataset.i;renderMonths()});
+ const o=MONTHS[mOn];$('#monthdetail').innerHTML=`<span class="pill" style="background:${o.c}">${o.s}</span> <b style="font-size:17px">${o.m} 月｜${o.t}</b><ul style="margin:8px 0 0;padding-left:20px">${o.x.map(t=>`<li>${t}</li>`).join('')}</ul>`}
+renderMonths();
+const STEPS=[
+ {k:'Observe',t:'看見',d:'觀察與盤點人才',c:'var(--c1)',bg:'#eaf3fb',x:['名單從 11 月就開始累積','持續觀察與培養潛力人選']},
+ {k:'Invite',t:'邀請',d:'給予小任務、創造參與機會',c:'var(--c2)',bg:'#fdf0ea',x:['從例會中的小角色開始','參與一個小型任務或活動專案']},
+ {k:'Try',t:'試做',d:'累積經驗、建立信心',c:'var(--c3)',bg:'#eaf6ec',x:['在現任幹部旁協作','熟悉工作內容與流程']},
+ {k:'Coach',t:'陪談',d:'用問題陪他思考，而不是一直說服',c:'var(--maroon)',bg:'#fbf0f2',x:['「你最擔心什麼？」','「如果有人陪你，你願不願意試？」']},
+ {k:'Handover',t:'交接',d:'文件、流程與實作完整傳承',c:'var(--c4)',bg:'#f1edf9',x:['交接前共同完成一個任務','確認文件、帳號、時程']}];
+let stepOn=0;
+function renderSteps(){$('#steps').innerHTML=STEPS.map((s,i)=>`<div class="step ${i===stepOn?'on':''}" data-i="${i}" style="background:${s.bg};border-color:${i===stepOn?s.c:'transparent'}"><div class="k" style="color:${s.c}">${s.k}</div><div class="t">${s.t}</div><div class="small muted">${s.d}</div></div>`).join('');
+ document.querySelectorAll('.step').forEach(el=>el.onclick=()=>{stepOn=+el.dataset.i;renderSteps()});
+ const s=STEPS[stepOn];$('#stepdetail').innerHTML=`<b style="color:${s.c}">早一點${s.t}</b>：${s.d}<ul style="margin:8px 0 0">${s.x.map(t=>`<li>${t}</li>`).join('')}</ul>`}
+renderSteps();
+
+/* ---------- roles ---------- */
+const ROLES=[
+ {id:'P',n:'President',zh:'培養決策者',d:'讓下一位參與目標設定、會議主持、重要決策'},
+ {id:'VPE',n:'VPE',zh:'培養教育規劃者',d:'讓會員一起排程、安排角色、追蹤教育進度'},
+ {id:'VPM',n:'VPM',zh:'培養會員經營者',d:'帶會員一起做 Guest follow-up、新會員 onboarding'},
+ {id:'VPPR',n:'VPPR',zh:'培養品牌推廣者',d:'讓會員參與社群、活動宣傳、內容製作'},
+ {id:'S',n:'Secretary',zh:'培養行政接手者',d:'讓下一位熟悉會議紀錄、文件與行政流程'},
+ {id:'T',n:'Treasurer',zh:'培養財務管理者',d:'整理帳務節奏、付款流程、年度財務重點'},
+ {id:'SAA',n:'SAA',zh:'培養會議營運者',d:'讓會員熟悉場地、設備、會前準備與流程'}];
+const PHASES=[
+ {k:'Document',zh:'留下執行依據',c:'var(--c1)',x:['撰寫／整理 SOP','彙整關鍵文件','整理帳號與權限','更新行事曆與時程']},
+ {k:'Share',zh:'分享與傳承',c:'var(--c2)',x:['將資料集中分享','說明工作流程與重點','邀請下一位一起參與','解答實際操作問題']},
+ {k:'Try',zh:'實際試做',c:'var(--c3)',x:['讓下一位旁觀學習','安排實際操作一次','給予回饋與建議','逐步提升獨立完成度']},
+ {k:'Handover',zh:'正式交接',c:'var(--c4)',x:['交接前共同完成一個任務','確認文件、帳號、時程','說明注意事項與 Tips','正式完成交接']}];
+let role=store.get('role','P');let checks=store.get('checks',{});
+function renderRoles(){
+ $('#roles').innerHTML=ROLES.map(r=>`<button class="role ${r.id===role?'on':''}" data-id="${r.id}">${r.n}</button>`).join('');
+ document.querySelectorAll('.role').forEach(b=>b.onclick=()=>{role=b.dataset.id;store.set('role',role);renderRoles()});
+ const r=ROLES.find(x=>x.id===role);$('#rname').textContent=`${r.n}｜${r.zh}`;$('#rdesc').textContent=r.d;
+ const c=checks[role]||{};
+ $('#phases').innerHTML=PHASES.map((p,pi)=>`<div class="phase"><h4><span class="pill" style="background:${p.c}">${p.k}</span>${p.zh}</h4>${p.x.map((t,ti)=>{const key=pi+'-'+ti;return `<div class="chk ${c[key]?'done':''}" data-k="${key}"><div class="box">${c[key]?'✓':''}</div><span>${t}</span></div>`}).join('')}</div>`).join('');
+ document.querySelectorAll('.chk').forEach(el=>el.onclick=()=>{const cc=checks[role]||(checks[role]={});cc[el.dataset.k]=!cc[el.dataset.k];store.set('checks',checks);renderRoles()});
+ const done=Object.values(c).filter(Boolean).length,total=16;
+ $('#pfill').style.width=(done/total*100)+'%';
+ $('#ptext').textContent=`交接準備度 ${done}/${total}`+(done===total?'　🎉 可以安心交棒了！':done>=8?'　已經過半，繼續加油':'');
+}
+renderRoles();
+$('#resetRole').onclick=()=>{checks[role]={};store.set('checks',checks);renderRoles();toast('已清除')};
+$('#copyRole').onclick=()=>{const r=ROLES.find(x=>x.id===role),c=checks[role]||{};let out=`【${r.n} 交接待辦】${r.zh}：${r.d}\n`;PHASES.forEach((p,pi)=>{out+=`\n${p.k}｜${p.zh}\n`;p.x.forEach((t,ti)=>out+=`${c[pi+'-'+ti]?'☑':'☐'} ${t}\n`)});copy(out)};
+
+/* ---------- rescue ---------- */
+const TOOLS={
+ 1:['提前招募、提早物色','名單從 11 月就開始累積，持續觀察與培養潛力人選。'],
+ 2:['Acting 代理制度（適用於所有幹部）','在正式選舉前，先讓有意願的會員「代理」任一幹部職務，透過實際參與和帶領，降低上手難度、增加意願、順便物色人選。'],
+ 3:['代理人＋輔導員制度','手把手教，不丟包，並控管工作量與學習進度，讓新手有支持、有信心。'],
+ 4:['產生憧憬','把掌聲和舞台給幹部，透過公開肯定與分享，讓新會員覺得「當幹部是令人驕傲的事」。'],
+ 5:['讓幹部成為成長路徑的一站','從入會就清楚告訴會員：擔任幹部是學習領導、專案管理與團隊合作的自然下一步。'],
+ 6:['資深關心、保持彈性','資深會員主動關心與鼓勵，並視情況提供彈性安排，例如：共同擔任、半年任期等，讓更多人願意嘗試。']};
+const ACTING=[['代理會長','主持例會、協調團隊'],['代理教育副會長','規劃例會內容、協助講者安排'],['代理會員副會長','協助新會員、會員關懷接觸'],['代理公關副會長','社群與活動宣傳、撰寫會議紀錄或亮點分享'],['代理秘書','記錄會議、整理並分發會議紀錄'],['代理財務','協助費用管理、預算與報表'],['代理場務','場地與設備準備、例會流程支援']];
+const DX=[
+ {t:'沒人',s:'找不到人選',dir:'提前招募、提早物色',tools:[1,5]},
+ {t:'沒意願',s:'有人但不想接',dir:'產生憧憬、讓幹部被看見',tools:[4,6]},
+ {t:'沒信心',s:'想接但怕做不好',dir:'降低門檻、有人陪',tools:[2,3],acting:true},
+ {t:'工作太重',s:'看了就怕',dir:'簡化、拆分工作',tools:[6],load:true}];
+let dxOn=-1;
+function renderDx(){
+ $('#dx').innerHTML=DX.map((d,i)=>`<button class="dxb ${i===dxOn?'on':''}" data-i="${i}">${d.t}<small>${d.s}</small></button>`).join('');
+ document.querySelectorAll('.dxb').forEach(b=>b.onclick=()=>{dxOn=+b.dataset.i;renderDx()});
+ if(dxOn<0)return;const d=DX[dxOn];
+ let h=`<div class="small muted">診斷：${d.t} → 解方方向</div><div class="dir">${d.dir}</div>`;
+ if(d.load){h+=`<div class="small muted" style="margin-top:6px">為什麼沒人想接？常見困擾 → 對應解方</div><div class="pairs">
+ <div class="pr bad">✗ 工作內容太多、太雜</div><div class="pr good">✓ 簡化流程：保留必要、刪除不必要</div>
+ <div class="pr bad">✗ 一個人扛，壓力很大</div><div class="pr good">✓ 拆分工作：由多人分工、共擔任務</div>
+ <div class="pr bad">✗ 流程不清楚、重複做</div><div class="pr good">✓ 建立模板：SOP、範本、清單一次到位</div>
+ <div class="pr bad">✗ 不知道從哪裡開始</div><div class="pr good">✓ 提供支援：有夥伴協助與交接</div></div>`}
+ h+=`<div class="small muted" style="margin-top:16px">救援工具箱</div>`+d.tools.map(n=>`<div class="tool"><div class="no">${n}</div><div><b>${TOOLS[n][0]}</b>${TOOLS[n][1]}</div></div>`).join('');
+ if(d.acting)h+=`<div class="small muted" style="margin-top:14px">各幹部的 Acting（代理）示例</div><div class="acting">${ACTING.map(a=>`<div class="act"><b>${a[0]}</b>${a[1]}</div>`).join('')}</div>`;
+ h+=`<div class="callout" style="margin-top:16px">下一步：用 <a href="#coach" style="color:var(--navy2);font-weight:700">教練式提問</a> 陪他談，而不是一直勸。</div>`;
+ $('#rx').innerHTML=h}
+renderDx();
+
+/* ---------- path ---------- */
+const PATH=[
+ {lv:'Small Task',t:'例會角色',d:'從例會中的小角色開始，建立參與感',c:'var(--c1)',m:'先給他一個例會小角色，讓他有參與感。'},
+ {lv:'Experience',t:'小專案',d:'參與一個小型任務或活動專案，累積經驗',c:'var(--c2)',m:'邀請他加入一個小專案，累積經驗。'},
+ {lv:'Confidence',t:'協助幹部',d:'在現任幹部旁協作，熟悉工作內容與流程',c:'var(--c3)',m:'讓他在你旁邊協作或擔任 Acting，建立信心。'},
+ {lv:'Officer',t:'擔任幹部',d:'正式承擔職責，帶領團隊一起完成目標',c:'var(--c4)',m:'他準備好了——正式邀請，並完成交接。'}];
+function renderPath(i){
+ $('#path').innerHTML=PATH.map((p,j)=>`<div class="pstep ${j===i?'on':''}" data-i="${j}" style="color:${p.c};${j<=i?'background:#fff':'opacity:.55'}"><span class="lv" style="background:${p.c}">${p.lv}</span><h3 style="color:var(--ink)">${p.t}</h3><div class="small muted">${p.d}</div></div>`).join('');
+ document.querySelectorAll('.pstep').forEach(el=>el.onclick=()=>{$('#pslider').value=el.dataset.i;renderPath(+el.dataset.i)});
+ $('#pathmsg').innerHTML=`下一步建議：${PATH[i].m}`}
+$('#pslider').oninput=e=>renderPath(+e.target.value);renderPath(0);
+
+/* ---------- coach ---------- */
+const QS=[['你最擔心什麼？','先聽見他的顧慮，阻力才看得見。'],['什麼會讓這個角色變得比較可行？','讓他自己說出需要的條件，例如分工、範本或有人陪。'],['如果有人陪你，你願意試試嗎？','把「一個人扛」變成「有人一起」，降低門檻。'],['你想從這個角色學到什麼？','把幹部連結到他自己的成長目標。']];
+$('#flips').innerHTML=QS.map(q=>`<div class="flip"><div class="in"><div class="face front"><div class="q">${q[0]}</div><div class="hint">點我翻面</div></div><div class="face back">${q[1]}</div></div></div>`).join('');
+document.querySelectorAll('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('on'));
+
+/* ---------- cases ---------- */
+const CASES=[
+ {id:'A',t:'Club A',s:'25 位會員，但沒有任何人想當下一任 President。',
+  q:['人不少，卡在「沒意願」還是「沒信心」？','大家對 President 的印象是什麼？是不是覺得工作太重？','有沒有人做過 Acting 或在幹部旁協作過？'],
+  d:[['沒意願 → 產生憧憬','把掌聲和舞台給幹部，讓會員看見當 President 的收穫'],['沒信心 → Acting 代理會長＋輔導員','先代理主持例會、協調團隊，有人陪、不丟包'],['工作太重 → 拆分 President 的工作','把工作分給其他幹部或小組，讓角色變得可行'],['Coach，而不是一直說服','找 2–3 位潛在人選，問「你最擔心什麼？」']]},
+ {id:'B',t:'Club B',s:'只有 8 位活躍會員，大家都已經輪流當過幹部。',
+  q:['卡在「沒人」，還是大家「累了」？','哪些工作可以簡化或刪掉？','新會員知道「當幹部是成長路徑的一站」嗎？'],
+  d:[['工作太重 → 簡化流程、建立模板','保留必要、刪除不必要；SOP、範本、清單一次到位'],['資深關心、保持彈性','視情況考慮共同擔任、半年任期等彈性安排'],['沒人 → 提前招募、提早物色','名單從 11 月開始累積，留意新會員與來賓'],['從入會就開始培養','新會員從例會小角色、小專案開始，一步步走向幹部']]}];
+let caseOn=-1;
+function renderCases(){
+ $('#cases').innerHTML=CASES.map((c,i)=>`<button class="case ${i===caseOn?'on':''}" data-i="${i}"><div class="big">${c.t}</div><div>${c.s}</div></button>`).join('');
+ document.querySelectorAll('.case').forEach(b=>b.onclick=()=>{caseOn=+b.dataset.i;renderCases()});
+ if(caseOn<0)return;const c=CASES[caseOn];
+ $('#casebox').innerHTML=`<b style="color:var(--navy)">${c.t}：${c.s}</b><div class="small muted" style="margin:10px 0 4px">先診斷：討論這幾個問題</div><ul style="margin:0;padding-left:20px">${c.q.map(x=>`<li>${x}</li>`).join('')}</ul><button class="btn ghost" id="reveal" style="margin-top:12px">打開討論提示</button><div id="hints" style="display:none">${c.d.map((x,i)=>`<div class="tool"><div class="no">${i+1}</div><div><b>${x[0]}</b>${x[1]}</div></div>`).join('')}</div>`;
+ $('#reveal').onclick=()=>{$('#hints').style.display='block';$('#reveal').style.display='none'}}
+renderCases();
+
+/* ---------- homework ---------- */
+const ACTS=['邀請一位會員旁觀我做一次工作','安排一位會員實際試做一次我的工作','寫好我這個職位的一頁 SOP','整理帳號、文件與行事曆，集中分享','用教練式提問和一位潛在人選聊聊','在幹部會議提議試行 Acting 代理制度','開始盤點分會的潛在接班人選'];
+$('#actlist').innerHTML=ACTS.map(a=>`<option value="${a}">`).join('');
+$('#f-role').innerHTML=ROLES.map(r=>`<option>${r.n}</option>`).join('')+'<option>IPP</option>';
+const F=['club','role','act','due','buddy','check','om','to'];
+const saved=store.get('hw',{});
+F.forEach(k=>{const el=$('#f-'+k);if(saved[k])el.value=saved[k];el.addEventListener('input',hwRender);el.addEventListener('change',hwRender)});
+function fmt(d){if(!d)return'＿＿';const [y,m,dd]=d.split('-');return `${+m}/${+dd}`}
+function hwRender(){
+ const v={};F.forEach(k=>v[k]=$('#f-'+k).value.trim());store.set('hw',v);
+ $('#o-buddy').textContent=`嗨 ${v.buddy||'＿＿'}！今天幹部訓練我們約好了：\n我會在 ${fmt(v.due)} 前完成「${v.act||'＿＿'}」，並在 ${fmt(v.om)} 的幹部會議分享。\n${fmt(v.check)} 我們互相確認進度，一起加油！`;
+ $('#o-report').textContent=`${v.to}您好：\n我是${v.club||'＿＿分會'}的 ${v.role}。參加「讓領導延續：培養你的接班人」幹部訓練後，回報我的課後實作：\n\n1. 我完成的接班行動：${v.act||'＿＿'}\n2. 執行方式與參與者：（例：邀請一位會員一起…）\n3. 幹部會議分享（${fmt(v.om)}）與大家的回饋：\n4. 我遇到的困難：\n5. 下一步計畫：\n\n謝謝！`}
+hwRender();
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>copy($('#'+b.dataset.copy).textContent));
+$('#copyMail').onclick=()=>copy('qqchu0101@gmail.com');
+
+go(location.hash.slice(1)||'start');
+</script>
+</body>
+</html>
